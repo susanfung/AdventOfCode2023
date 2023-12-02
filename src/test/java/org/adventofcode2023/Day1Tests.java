@@ -11,6 +11,7 @@ import static org.adventofcode2023.Day1.calibrationValuePart2;
 import static org.adventofcode2023.Day1.findFirstDigit;
 import static org.adventofcode2023.Day1.findFirstNumberWord;
 import static org.adventofcode2023.Day1.findLastDigit;
+import static org.adventofcode2023.Day1.findLastNumberWord;
 
 class Day1Tests
 {
@@ -299,6 +300,13 @@ class Day1Tests
         String[] findFirstNumberWordResults = {findFirstNumberWord("two1nine"), findFirstNumberWord("eightwothree"), findFirstNumberWord(
                 "abcone2threexyz"), findFirstNumberWord("xtwone3four"), findFirstNumberWord("zoneight234")};
         Approvals.verifyAll("First Number Word", findFirstNumberWordResults);
+    }
+
+    @Test
+    void testFindLastNumberWord() {
+        String[] findLastNumberWordResults = {findLastNumberWord("two1nine"), findLastNumberWord("eightwothree"), findLastNumberWord(
+                "abcone2threexyz"), findLastNumberWord("xtwone3four"), findLastNumberWord("7pqrstsixteen")};
+        Approvals.verifyAll("Last Number Word", findLastNumberWordResults);
     }
 
     @Test

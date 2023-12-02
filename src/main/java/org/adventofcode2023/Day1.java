@@ -76,4 +76,19 @@ public class Day1 {
             return null;
         }
     }
+
+    public static String findLastNumberWord(String string) {
+        String[] numbersInWords = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+        String regex = String.join("|", numbersInWords);
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(string);
+        String lastMatch = null;
+
+        while (matcher.find()) {
+            lastMatch = matcher.group();
+        }
+
+        return lastMatch;
+    }
 }
