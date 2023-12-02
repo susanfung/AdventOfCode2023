@@ -4,6 +4,8 @@ package org.adventofcode2023;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.adventofcode2023.Day1.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,5 +25,11 @@ public class Day1Tests
       String[] findLastDigitResults = {findLastDigit("1abc2"), findLastDigit("pqr3stu8vwx"), findLastDigit(
               "a1b2c3d4e5f"), findLastDigit("treb7uchet")};
       Approvals.verifyAll("Last Digit", findLastDigitResults);
+  }
+
+  @Test
+  public void testCalibrationValue()
+  {
+      Approvals.verify(calibrationValue(Arrays.asList("1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet")).toString());
   }
 }
