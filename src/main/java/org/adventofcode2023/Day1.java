@@ -34,37 +34,30 @@ public class Day1 {
             Map.Entry<Integer, String> lastDigit = findLastDigit(string);
             Map.Entry<Integer, String> lastNumberWord = findLastNumberWord(string);
 
-            String firstNumber;
-            String lastNumber;
+            String firstNumber = getNumber(firstDigit, firstNumberWord, firstDigit.getKey() < firstNumberWord.getKey());
 
-            if (firstDigit.getValue() == null || firstNumberWord.getValue() == null) {
-                if (firstDigit.getValue() == null) {
-                    firstNumber = String.valueOf(numberWordsToDigits(firstNumberWord.getValue()));
-                } else {
-                    firstNumber = firstDigit.getValue();
-                }
-            } else if (firstDigit.getKey() < firstNumberWord.getKey()) {
-                firstNumber = firstDigit.getValue();
-            } else {
-                firstNumber = String.valueOf(numberWordsToDigits(firstNumberWord.getValue()));
-            }
-
-            if (lastDigit.getValue() == null || lastNumberWord.getValue() == null) {
-                if (lastDigit.getValue() == null) {
-                    lastNumber = String.valueOf(numberWordsToDigits(lastNumberWord.getValue()));
-                } else {
-                    lastNumber = lastDigit.getValue();
-                }
-            } else if (lastDigit.getKey() > lastNumberWord.getKey()) {
-                lastNumber = lastDigit.getValue();
-            } else {
-                lastNumber = String.valueOf(numberWordsToDigits(lastNumberWord.getValue()));
-            }
+            String lastNumber = getNumber(lastDigit, lastNumberWord, lastDigit.getKey() > lastNumberWord.getKey());
 
             calibrationValue += Integer.parseInt(firstNumber + lastNumber);
         }
 
         return calibrationValue;
+    }
+
+    private static String getNumber(Map.Entry<Integer, String> firstDigit,
+                                    Map.Entry<Integer, String> firstNumberWord,
+                                    boolean firstDigit1) {
+        if (firstDigit.getValue() == null || firstNumberWord.getValue() == null) {
+            if (firstDigit.getValue() == null) {
+                return String.valueOf(numberWordsToDigits(firstNumberWord.getValue()));
+            } else {
+                return firstDigit.getValue();
+            }
+        } else if (firstDigit1) {
+            return firstDigit.getValue();
+        } else {
+            return String.valueOf(numberWordsToDigits(firstNumberWord.getValue()));
+        }
     }
 
     public static Map.Entry<Integer, String> findFirstDigit(String string) {
@@ -91,9 +84,7 @@ public class Day1 {
     }
 
     public static Map.Entry<Integer, String> findFirstNumberWord(String string) {
-        String[] numbersInWords = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-        String regex = String.join("|", numbersInWords);
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = getPattern();
 
         Matcher matcher = pattern.matcher(string);
         if (matcher.find()) {
@@ -104,9 +95,7 @@ public class Day1 {
     }
 
     public static Map.Entry<Integer, String> findLastNumberWord(String string) {
-        String[] numbersInWords = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-        String regex = String.join("|", numbersInWords);
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = getPattern();
 
         Matcher matcher = pattern.matcher(string);
         String lastMatch = null;
@@ -120,7 +109,13 @@ public class Day1 {
         return new AbstractMap.SimpleEntry<>(lastIndex, lastMatch);
     }
 
-    public static int numberWordsToDigits(String numberWord) {
+    private static Pattern getPattern() {
+        String[] numbersInWords = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+        String regex = String.join("|", numbersInWords);
+        return Pattern.compile(regex);
+    }
+
+    private static int numberWordsToDigits(String numberWord) {
       Map<String, Integer> numberMap = new HashMap<>();
       numberMap.put("zero", 0);
       numberMap.put("one", 1);
