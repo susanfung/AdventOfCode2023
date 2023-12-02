@@ -2,6 +2,8 @@ package org.adventofcode2023;
 
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Day1 {
     static Logger logger = Logger.getLogger(Day1.class.getName());
@@ -14,6 +16,27 @@ public class Day1 {
 
         for (String string : stringList) {
             calibrationValue += Integer.parseInt(findFirstDigit(string) + findLastDigit(string));
+        }
+
+        return calibrationValue;
+    }
+
+    public static Integer calibrationValuePart2(List<String> stringList) {
+        int calibrationValue = 0;
+
+        for (String string : stringList) {
+            String firstDigit = findFirstDigit(string);
+            String lastDigit = findLastDigit(string);
+
+            if (firstDigit == null){
+                firstDigit = "0";
+            }
+
+            if (lastDigit == null){
+                lastDigit = "0";
+            }
+
+            calibrationValue += Integer.parseInt(firstDigit + lastDigit);
         }
 
         return calibrationValue;
@@ -40,32 +63,17 @@ public class Day1 {
 
         return null;
     }
-}
 
-enum Number {
-    ONE(1, "one"),
-    TWO(2, "two"),
-    THREE(3, "three"),
-    FOUR(4, "four"),
-    FIVE(5, "five"),
-    SIX(6, "six"),
-    SEVEN(7, "seven"),
-    EIGHT(8, "eight"),
-    NINE(9, "nine");
+    public static String findFirstNumberWord(String string) {
+        String[] numbersInWords = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+        String regex = String.join("|", numbersInWords);
+        Pattern pattern = Pattern.compile(regex);
 
-    private final int value;
-    private final String word;
-
-    Number(int value, String word) {
-        this.value = value;
-        this.word = word;
-    }
-
-    public int getValue() {
-        return this.value;
-    }
-
-    public String getWord() {
-        return this.word;
+        Matcher matcher = pattern.matcher(string);
+        if (matcher.find()) {
+            return matcher.group();
+        } else {
+            return null;
+        }
     }
 }

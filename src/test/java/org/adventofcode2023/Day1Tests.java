@@ -6,8 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.adventofcode2023.Day1.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.adventofcode2023.Day1.calibrationValuePart1;
+import static org.adventofcode2023.Day1.calibrationValuePart2;
+import static org.adventofcode2023.Day1.findFirstDigit;
+import static org.adventofcode2023.Day1.findFirstNumberWord;
+import static org.adventofcode2023.Day1.findLastDigit;
 
 class Day1Tests
 {
@@ -286,8 +289,22 @@ class Day1Tests
   }
 
   @Test
-  void testCalibrationValue()
+  void testCalibrationValuePart1()
   {
       Approvals.verify(calibrationValuePart1(Arrays.asList("1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet")).toString());
   }
+
+    @Test
+    void testFindFirstNumberWord() {
+        String[] findFirstNumberWordResults = {findFirstNumberWord("two1nine"), findFirstNumberWord("eightwothree"), findFirstNumberWord(
+                "abcone2threexyz"), findFirstNumberWord("xtwone3four"), findFirstNumberWord("zoneight234")};
+        Approvals.verifyAll("First Number Word", findFirstNumberWordResults);
+    }
+
+    @Test
+    void testCalibrationValuePart2() {
+        Approvals.verify(calibrationValuePart2(
+                Arrays.asList("two1nine", "eightwothree", "abcone2threexyz", "xtwone3four", "4nineeightseven2", "zoneight234",
+                              "7pqrstsixteen")).toString());
+    }
 }
