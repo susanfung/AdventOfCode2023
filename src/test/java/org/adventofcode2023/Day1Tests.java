@@ -9,12 +9,12 @@ import java.util.Arrays;
 import static org.adventofcode2023.Day1.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Day1Tests
+class Day1Tests
 {
     @Test
-    public void answerDay1Part1()
+    void answerDay1Part1()
     {
-        Approvals.verify(calibrationValue(
+        Approvals.verify(calibrationValuePart1(
                 Arrays.asList("2911threeninesdvxvheightwobm", "3three16xsxhpnqmzmnine8one", "seven5khtwo891hlb", "sixthreeqpzjpn195", "jrnf3",
                               "qpzcfbfsrxthreenine3ksbghzzffsevenfive9", "2fxvxzzgdnfkzzh4eightnine7five", "4fourtwobjscjgtbvninesix",
                               "onetwofivelvnbcbn5", "6vjdtd1j1eightone", "sshnxbjrt1", "5ljsxqjdxr91", "71six14rkdhdszbfz", "khlm3",
@@ -270,7 +270,7 @@ public class Day1Tests
     }
 
   @Test
-  public void testFindFirstDigit()
+  void testFindFirstDigit()
   {
       String[] findFirstDigitResults = {findFirstDigit("1abc2"), findFirstDigit("pqr3stu8vwx"), findFirstDigit(
               "a1b2c3d4e5f"), findFirstDigit("treb7uchet")};
@@ -278,7 +278,7 @@ public class Day1Tests
   }
 
   @Test
-  public void testFindLastDigit()
+  void testFindLastDigit()
   {
       String[] findLastDigitResults = {findLastDigit("1abc2"), findLastDigit("pqr3stu8vwx"), findLastDigit(
               "a1b2c3d4e5f"), findLastDigit("treb7uchet")};
@@ -286,8 +286,8 @@ public class Day1Tests
   }
 
   @Test
-  public void testCalibrationValue()
+  void testCalibrationValue()
   {
-      Approvals.verify(calibrationValue(Arrays.asList("1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet")).toString());
+      Approvals.verify(calibrationValuePart1(Arrays.asList("1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet")).toString());
   }
 }
