@@ -16,4 +16,12 @@ public class Day1Tests
               "a1b2c3d4e5f"), findFirstDigit("treb7uchet")};
       Approvals.verifyAll("First Digit", findFirstDigitResults);
   }
+
+  @Test
+  public void testFindLastDigit()
+  {
+      String[] findLastDigitResults = {findLastDigit("1abc2"), findLastDigit("pqr3stu8vwx"), findLastDigit(
+              "a1b2c3d4e5f"), findLastDigit("treb7uchet")};
+      Approvals.verifyAll("Last Digit", findLastDigitResults);
+  }
 }
