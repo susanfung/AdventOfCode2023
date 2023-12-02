@@ -11,14 +11,12 @@ public class Day1 {
         int calibrationValue = 0;
 
         for (String string : stringList) {
-            String firstDigit = findFirstDigit(string);
-            String lastDigit = findLastDigit(string);
-
-            calibrationValue += Integer.parseInt(firstDigit + lastDigit);
+            calibrationValue += Integer.parseInt(findFirstDigit(string) + findLastDigit(string));
         }
 
         return calibrationValue;
     }
+
     public static String findFirstDigit(String string) {
         for (int i = 0; i < string.length(); i++) {
             char character = string.charAt(i);
