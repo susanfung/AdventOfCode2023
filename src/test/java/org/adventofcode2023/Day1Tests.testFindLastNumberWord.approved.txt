@@ -1,5 +1,5 @@
-Last Number Word[0] = nine
-Last Number Word[1] = three
-Last Number Word[2] = three
-Last Number Word[3] = four
-Last Number Word[4] = six
+Last Number Word[0] = 4=nine
+Last Number Word[1] = 7=three
+Last Number Word[2] = 7=three
+Last Number Word[3] = 7=four
+Last Number Word[4] = 6=six

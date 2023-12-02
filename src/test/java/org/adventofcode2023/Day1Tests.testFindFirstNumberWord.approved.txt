@@ -1,5 +1,5 @@
-First Number Word[0] = two
-First Number Word[1] = eight
-First Number Word[2] = one
-First Number Word[3] = two
-First Number Word[4] = one
+First Number Word[0] = 0=two
+First Number Word[1] = 0=eight
+First Number Word[2] = 3=one
+First Number Word[3] = 1=two
+First Number Word[4] = 1=one
