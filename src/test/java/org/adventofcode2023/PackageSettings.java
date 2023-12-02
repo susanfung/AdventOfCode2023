@@ -1,4 +1,4 @@
-package org.samples;
+package org.adventofcode2023;
 
 import org.approvaltests.core.ApprovalFailureReporter;
 import org.approvaltests.reporters.DiffReporter;
