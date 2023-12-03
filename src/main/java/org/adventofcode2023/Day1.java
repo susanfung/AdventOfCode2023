@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Day1 {
     static Logger logger = Logger.getLogger(Day1.class.getName());
@@ -26,23 +27,35 @@ public class Day1 {
     }
 
     public static Integer calibrationValuePart2(List<String> stringList) {
-        int calibrationValue = 0;
+        List<String> replacedWordsList = replaceWordsWithNumbers(stringList);
 
-        for (String string : stringList) {
-            Map.Entry<Integer, String> firstDigit = findFirstDigit(string);
-            Map.Entry<Integer, String> firstNumberWord = findFirstNumberWord(string);
-            Map.Entry<Integer, String> lastDigit = findLastDigit(string);
-            Map.Entry<Integer, String> lastNumberWord = findLastNumberWord(string);
-
-            String firstNumber = getNumber(firstDigit, firstNumberWord, firstDigit.getKey() < firstNumberWord.getKey());
-
-            String lastNumber = getNumber(lastDigit, lastNumberWord, lastDigit.getKey() > lastNumberWord.getKey());
-
-            calibrationValue += Integer.parseInt(firstNumber + lastNumber);
-        }
-
-        return calibrationValue;
+        return calibrationValuePart1(replacedWordsList);
     }
+
+    public static List<String> replaceWordsWithNumbers(List<String> wordsList) {
+        return wordsList.stream()
+                .map(word -> {
+                    for (String key : numberWordsMap.keySet()) {
+                        word = word.replaceAll(Pattern.quote(key), numberWordsMap.get(key));
+                    }
+                    return word;
+                })
+                .collect(Collectors.toList());
+    }
+
+    static Map<String, String> numberWordsMap = new HashMap<String, String>() {
+        {
+            put("one", "o1e");
+            put("two", "t2o");
+            put("three", "t3");
+            put("four", "4");
+            put("five", "5e");
+            put("six", "6");
+            put("seven", "7");
+            put("eight", "8t");
+            put("nine", "9");
+        }
+    };
 
     private static String getNumber(Map.Entry<Integer, String> firstDigit,
                                     Map.Entry<Integer, String> firstNumberWord,
