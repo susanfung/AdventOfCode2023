@@ -5,14 +5,11 @@ import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Map;
 
 import static org.adventofcode2023.Day1.calibrationValuePart1;
 import static org.adventofcode2023.Day1.calibrationValuePart2;
 import static org.adventofcode2023.Day1.findFirstDigit;
-import static org.adventofcode2023.Day1.findFirstNumberWord;
 import static org.adventofcode2023.Day1.findLastDigit;
-import static org.adventofcode2023.Day1.findLastNumberWord;
 
 class Day1Tests
 {
@@ -552,22 +549,6 @@ class Day1Tests
   {
       Approvals.verify(calibrationValuePart1(Arrays.asList("1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet")).toString());
   }
-
-    @Test
-    void testFindFirstNumberWord() {
-        Map.Entry<String, Integer>[] findFirstNumberWordResults = new Map.Entry[]{findFirstNumberWord("two1nine"), findFirstNumberWord(
-                "eightwothree"), findFirstNumberWord("abcone2threexyz"), findFirstNumberWord("xtwone3four"), findFirstNumberWord(
-                "zoneight234")};
-        Approvals.verifyAll("First Number Word", findFirstNumberWordResults);
-    }
-
-    @Test
-    void testFindLastNumberWord() {
-        Map.Entry<String, Integer>[] findLastNumberWordResults = new Map.Entry[]{findLastNumberWord("two1nine"), findLastNumberWord(
-                "eightwothree"), findLastNumberWord("abcone2threexyz"), findLastNumberWord("xtwone3four"), findLastNumberWord(
-                "7pqrstsixteen")};
-        Approvals.verifyAll("Last Number Word", findLastNumberWordResults);
-    }
 
     @Test
     void testCalibrationValuePart2() {
