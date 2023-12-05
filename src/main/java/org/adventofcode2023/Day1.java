@@ -46,13 +46,13 @@ public class Day1 {
 
     public static List<String> replaceWordsWithNumbers(List<String> wordsList) {
         return wordsList.stream()
-                .map(word -> {
-                    for (String key : numberWordsMap.keySet()) {
-                        word = word.replaceAll(Pattern.quote(key), numberWordsMap.get(key));
-                    }
-                    return word;
-                })
-                .collect(Collectors.toList());
+                        .map(word -> {
+                            for (String key : numberWordsMap.keySet()) {
+                                word = word.replaceAll(Pattern.quote(key), numberWordsMap.get(key));
+                            }
+                            return word;
+                        })
+                        .collect(Collectors.toList());
     }
 
     public static Map.Entry<Integer, String> findFirstDigit(String string) {
