@@ -3,9 +3,9 @@ package org.adventofcode2023;
 import java.util.List;
 
 public class Day2 {
-    public int red;
-    public int green;
-    public int blue;
+    public final int red;
+    public final int green;
+    public final int blue;
 
     public Day2(int red, int green, int blue) {
         this.red = red;
@@ -15,15 +15,15 @@ public class Day2 {
 
     public static Integer sumOfValidGameIds(Day2 cubesInBag, List<String> gameslist) {
         int sumOfGameIds = 0;
+        boolean isOk = true;
 
         for (String game : gameslist) {
-            String[] gameArray = game.split(":");
-            String[] gameSubSets = gameArray[1].split(";");
-
             int red = 0;
             int green = 0;
             int blue = 0;
-            boolean isOk = true;
+
+            String[] gameArray = game.split(":");
+            String[] gameSubSets = gameArray[1].split(";");
 
             for (String subset : gameSubSets) {
                 String[] cubes = subset.split(",");
@@ -34,28 +34,32 @@ public class Day2 {
                     int number = Integer.parseInt(cubeArray[0]);
                     String color = cubeArray[1];
 
-                    if (color.equals("red")) {
+                    if (color.contains("red")) {
                         red += number;
                     }
 
-                    if (color.equals("green")) {
+                    if (color.contains("green")) {
                         green += number;
                     }
 
-                    if (color.equals("blue")) {
+                    if (color.contains("blue")) {
                         blue += number;
+                    }
+                    if (red > cubesInBag.red || green > cubesInBag.green || blue > cubesInBag.blue) {
+                        isOk = false;
                     }
                 }
 
-                if (red > cubesInBag.red || green > cubesInBag.green || blue > cubesInBag.blue) {
-                    isOk = false;
-                    break;
-                }
+                red = 0;
+                green = 0;
+                blue = 0;
             }
 
             if (isOk) {
                 sumOfGameIds += Integer.parseInt(gameArray[0].split(" ")[1]);
             }
+
+            isOk = true;
         }
 
         return sumOfGameIds;
