@@ -64,4 +64,44 @@ public class Day2 {
 
         return sumOfGameIds;
     }
+
+    public static Integer sumOfThePowerOfCubeSets(List<String> gameslist) {
+        int sumOfThePowers = 0;
+
+        for (String game : gameslist) {
+            int red = 0;
+            int green = 0;
+            int blue = 0;
+
+            String[] gameArray = game.split(":");
+            String[] gameSubSets = gameArray[1].split(";");
+
+            for (String subset : gameSubSets) {
+                String[] cubes = subset.split(",");
+
+                for (String cube : cubes) {
+                    String[] cubeArray = cube.trim().split(" ");
+
+                    int number = Integer.parseInt(cubeArray[0]);
+                    String color = cubeArray[1];
+
+                    if (color.contains("red") && number > red) {
+                        red = number;
+                    }
+
+                    if (color.contains("green") && number > green) {
+                        green = number;
+                    }
+
+                    if (color.contains("blue") && number > blue) {
+                        blue = number;
+                    }
+                }
+            }
+
+            sumOfThePowers += (red * green * blue);
+        }
+
+        return sumOfThePowers;
+    }
 }
