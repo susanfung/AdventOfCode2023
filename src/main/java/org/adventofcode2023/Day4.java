@@ -1,5 +1,6 @@
 package org.adventofcode2023;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Day4 {
@@ -9,20 +10,14 @@ public class Day4 {
         for (String scratchCard : scratchCards) {
             String[] split = scratchCard.split(":");
             String[] numbers = split[1].trim().split("\\|");
-            String[] winningNumbers = numbers[0].trim().split(" ");
-            String[] numbersYouHave = numbers[1].trim().split(" ");
+            List<String> winningNumbers = Arrays.asList(numbers[0].trim().split("\\s+"));
+            String[] cardNumbers = numbers[1].trim().split("\\s+");
 
             int points = 0;
 
-            for (String number : numbersYouHave) {
-                for (String winningNumber : winningNumbers) {
-                    if (number.trim().equals(winningNumber.trim())) {
-                        if (points >= 1) {
-                            points = points * 2;
-                        } else {
-                            points++;
-                        }
-                    }
+            for (String number : cardNumbers) {
+                if (winningNumbers.contains(number)) {
+                    points = points == 0 ? 1 : points * 2;
                 }
             }
 
