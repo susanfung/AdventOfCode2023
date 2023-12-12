@@ -39,7 +39,7 @@ public class Day4 {
             String[] cardNumbers = numbers[1].trim().split("\\s+");
 
             int points = 0;
-            int cardNumber = Integer.parseInt(split[0].trim().split(" ")[1]);
+            int cardNumber = Integer.parseInt(split[0].trim().split("\\s+")[1]);
             int numberOfCards = cardMap.get(cardNumber);
 
             for (String number : cardNumbers) {
@@ -59,7 +59,7 @@ public class Day4 {
     public static Map<Integer, Integer> generateScratchcardHashMaps(List<String> scratchCards) {
         Map<Integer, Integer> cardMap = new HashMap<>();
 
-        for(int i = 1; i <= scratchCards.size(); i++) {
+        for (int i = 1; i <= scratchCards.size(); i++) {
             cardMap.put(i, 1);
         }
 
@@ -68,9 +68,11 @@ public class Day4 {
 
     public static int sumOfScratchcardValues(Map<Integer, Integer> cardMap) {
         int total = 0;
+
         for (int value : cardMap.values()) {
             total += value;
         }
+
         return total;
     }
 }
