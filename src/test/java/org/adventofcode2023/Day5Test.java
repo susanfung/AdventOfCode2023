@@ -160,6 +160,15 @@ class Day5Test {
     @Test
     void createMap() {
         List<String> seedToSoilMap = Arrays.asList("50 98 2", "52 50 48");
-        Approvals.verify(Day5.createMap(seedToSoilMap));
+        List<Day5Map> map = Day5.createMap(seedToSoilMap);
+
+        assert map.get(0).sourceRangeStart == 98;
+        assert map.get(0).sourceRangeEnd == 98 + 2 - 1;
+        assert map.get(0).destinationRangeStart == 50;
+        assert map.get(0).range == 2;
+        assert map.get(1).sourceRangeStart == 50;
+        assert map.get(1).sourceRangeEnd == 50 + 48 - 1;
+        assert map.get(1).destinationRangeStart == 52;
+        assert map.get(1).range == 48;
     }
 }

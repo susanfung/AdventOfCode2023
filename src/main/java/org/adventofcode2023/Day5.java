@@ -1,11 +1,10 @@
 package org.adventofcode2023;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Day5 {
     public static Long lowestLocationNumber(List<Long> seedList,
@@ -16,46 +15,74 @@ public class Day5 {
                                             List<String> lightToTemperatureList,
                                             List<String> temperatureToHumidityList,
                                             List<String> humidityToLocationList) {
-        Map<Long, Long> seedToSoilMap = createMap(seedToSoilList);
-        Map<Long, Long> soilToFertilizerMap = createMap(soilToFertilizerList);
-        Map<Long, Long> fertilizerToWaterMap = createMap(fertilizerToWaterList);
-        Map<Long, Long> waterToLightMap = createMap(waterToLightList);
-        Map<Long, Long> lightToTemperatureMap = createMap(lightToTemperatureList);
-        Map<Long, Long> temperatureToHumidityMap = createMap(temperatureToHumidityList);
-        Map<Long, Long> humidityToLocationMap = createMap(humidityToLocationList);
+        List<Day5Map> seedToSoilMap = createMap(seedToSoilList);
+        List<Day5Map> soilToFertilizerMap = createMap(soilToFertilizerList);
+        List<Day5Map> fertilizerToWaterMap = createMap(fertilizerToWaterList);
+        List<Day5Map> waterToLightMap = createMap(waterToLightList);
+        List<Day5Map> lightToTemperatureMap = createMap(lightToTemperatureList);
+        List<Day5Map> temperatureToHumidityMap = createMap(temperatureToHumidityList);
+        List<Day5Map> humidityToLocationMap = createMap(humidityToLocationList);
 
-        Set<Long> locations = new HashSet<>();
+        Long minimumLocation = Long.MAX_VALUE;
 
         for (Long seed : seedList) {
-            long soil = (seedToSoilMap.get(seed) == null) ? seed : seedToSoilMap.get(seed);
-            long fertilizer = (soilToFertilizerMap.get(soil) == null) ? soil : soilToFertilizerMap.get(soil);
-            long water = (fertilizerToWaterMap.get(fertilizer) == null) ? fertilizer : fertilizerToWaterMap.get(fertilizer);
-            long light = (waterToLightMap.get(water) == null) ? water : waterToLightMap.get(water);
-            long temperature = (lightToTemperatureMap.get(light) == null) ? light : lightToTemperatureMap.get(light);
-            long humidity = (temperatureToHumidityMap.get(temperature) == null) ? temperature : temperatureToHumidityMap.get(temperature);
-            long location = (humidityToLocationMap.get(humidity) == null) ? humidity : humidityToLocationMap.get(humidity);
+            long soil = seedToSoilMap.stream()
+                                     .filter(map -> seed >= map.sourceRangeStart && seed <= map.sourceRangeEnd)
+                                     .map(map -> map.destinationRangeStart + (seed - map.sourceRangeStart))
+                                     .findFirst()
+                                     .orElse(seed);
 
-            locations.add(location);
-        }
+            long fertilizer = soilToFertilizerMap.stream()
+                                                 .filter(map -> soil >= map.sourceRangeStart && soil <= map.sourceRangeEnd)
+                                                 .map(map -> map.destinationRangeStart + (soil - map.sourceRangeStart))
+                                                 .findFirst()
+                                                 .orElse(soil);
 
-        return Collections.min(locations);
-    }
+            long water = fertilizerToWaterMap.stream()
+                                             .filter(map -> fertilizer >= map.sourceRangeStart && fertilizer <= map.sourceRangeEnd)
+                                             .map(map -> map.destinationRangeStart + (fertilizer - map.sourceRangeStart))
+                                             .findFirst()
+                                             .orElse(fertilizer);
 
-    public static Map<Long, Long> createMap(List<String> stringList) {
-        Map<Long, Long> map = new HashMap<>();
+            long light = waterToLightMap.stream()
+                                        .filter(map -> water >= map.sourceRangeStart && water <= map.sourceRangeEnd)
+                                        .map(map -> map.destinationRangeStart + (water - map.sourceRangeStart))
+                                        .findFirst()
+                                        .orElse(water);
 
-        for (String string : stringList) {
-            String[] split = string.split(" ");
+            long temperature = lightToTemperatureMap.stream()
+                                                    .filter(map -> light >= map.sourceRangeStart && light <= map.sourceRangeEnd)
+                                                    .map(map -> map.destinationRangeStart + (light - map.sourceRangeStart))
+                                                    .findFirst()
+                                                    .orElse(light);
 
-            long destinationRangeStart = Long.parseLong(split[0]);
-            long sourceRangeStart = Long.parseLong(split[1]);
-            int range = Integer.parseInt(split[2]);
+            long humidity = temperatureToHumidityMap.stream()
+                                                    .filter(map -> temperature >= map.sourceRangeStart && temperature <= map.sourceRangeEnd)
+                                                    .map(map -> map.destinationRangeStart + (temperature - map.sourceRangeStart))
+                                                    .findFirst()
+                                                    .orElse(temperature);
 
-            for (long i = sourceRangeStart, j = destinationRangeStart; i < sourceRangeStart + range && j < destinationRangeStart + range; i++, j++) {
-                map.put(i, j);
+            long location = humidityToLocationMap.stream()
+                                                 .filter(map -> humidity >= map.sourceRangeStart && humidity <= map.sourceRangeEnd)
+                                                 .map(map -> map.destinationRangeStart + (humidity - map.sourceRangeStart))
+                                                 .findFirst()
+                                                 .orElse(humidity);
+
+            if (location < minimumLocation) {
+                minimumLocation = location;
             }
         }
 
-        return map;
+        return minimumLocation;
+    }
+
+    public static List<Day5Map> createMap(List<String> stringList) {
+        return stringList.stream()
+                         .map(string -> string.split(" "))
+                         .map(split -> new Day5Map(Long.parseLong(split[1]),
+                                                   Long.parseLong(split[1]) + Integer.parseInt(split[2]) - 1,
+                                                   Long.parseLong(split[0]),
+                                                   Integer.parseInt(split[2])))
+                         .collect(Collectors.toList());
     }
 }
