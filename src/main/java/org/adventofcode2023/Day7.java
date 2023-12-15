@@ -14,36 +14,33 @@ public class Day7 {
 
         for (String cardsAndBid : cardsAndBids) {
             String[] cardsAndBidArray = cardsAndBid.split(" ");
-            List<String> characterCounts = countAndSortCharacters(cardsAndBidArray[0]);
+            Integer characterCounts = getScore(cardsAndBidArray[0]);
 
             hands.add(new Day7Hands(characterCounts, cardsAndBidArray[0], cardsAndBidArray[1]));
         }
 
         Collections.sort(hands, (hand1, hand2) -> {
-            for (int i = 0; i < hand1.characterCounts.size(); i++) {
-                if (hand1.characterCounts.get(i).equals(hand2.characterCounts.get(i))) {
-                    List<String> hand1Cards = cardsToNumbers(hand1.cards.split(""));
-                    List<String> hand2Cards = cardsToNumbers(hand2.cards.split(""));
+            if (hand1.characterCounts.equals(hand2.characterCounts)) {
+                List<String> hand1Cards = cardsToNumbers(hand1.cards.split(""));
+                List<String> hand2Cards = cardsToNumbers(hand2.cards.split(""));
 
-                    for (int j = 0; j < hand1Cards.size(); j++) {
-                        int comparisonCards = Integer.compare(Integer.parseInt(hand1Cards.get(j)), Integer.parseInt(hand2Cards.get(j)));
+                for (int j = 0; j < hand1Cards.size(); j++) {
+                    int comparisonCards = Integer.compare(Integer.parseInt(hand1Cards.get(j)), Integer.parseInt(hand2Cards.get(j)));
 
-                        if (comparisonCards != 0) {
-                            return comparisonCards;
-                        }
+                    if (comparisonCards != 0) {
+                        return comparisonCards;
                     }
-                } else {
-                    int comparisonCharacterCounts = hand1.characterCounts.get(i).compareTo(hand2.characterCounts.get(i));
+                }
+            } else {
+                int comparisonCharacterCounts = hand1.characterCounts.compareTo(hand2.characterCounts);
 
-                    if (comparisonCharacterCounts != 0) {
-                        return comparisonCharacterCounts;
-                    }
+                if (comparisonCharacterCounts != 0) {
+                    return comparisonCharacterCounts;
                 }
             }
 
             return 0;
         });
-
 
         for (int i = 0; i < hands.size(); i++) {
             totalWinnings += Integer.parseInt(hands.get(i).bid) * (i + 1);
@@ -52,7 +49,7 @@ public class Day7 {
         return totalWinnings;
     }
 
-    public static List<String> countAndSortCharacters(String string) {
+    public static Integer getScore(String string) {
         Map<Character, Integer> charCountMap = new HashMap<>();
 
         for (char character : string.toCharArray()) {
@@ -64,7 +61,28 @@ public class Day7 {
                                                 .sorted((count1, count2) -> Integer.compare(count2, count1))
                                                 .map(String::valueOf)
                                                 .collect(java.util.stream.Collectors.toList());
-        return sortedCounts;
+
+        return calculateScore(sortedCounts);
+    }
+
+    private static int calculateScore(List<String> cards) {
+        if (String.join("", cards).equals("5")) {
+            return 7;
+        } else if (String.join("", cards).equals("41")) {
+            return 6;
+        } else if (String.join("", cards).equals("32")) {
+            return 5;
+        } else if (String.join("", cards).equals("311")) {
+            return 4;
+        } else if (String.join("", cards).equals("221")) {
+            return 3;
+        } else if (String.join("", cards).equals("2111")) {
+            return 2;
+        } else if (String.join("", cards).equals("11111")) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     private static List<String> cardsToNumbers(String[] cards) {
