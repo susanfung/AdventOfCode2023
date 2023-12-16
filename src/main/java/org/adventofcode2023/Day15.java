@@ -92,4 +92,23 @@ public class Day15 {
 
         return resultList;
     }
+
+    public static Integer focusingPower(List<String> initializationSequence) {
+        Map<Integer, List<List<String>>> boxContents = mapLensToBox(initializationSequence);
+        int sum = 0;
+
+        for (Integer key : boxContents.keySet()) {
+            List<List<String>> contentsOfBox = boxContents.get(key);
+            int boxSum = 0;
+
+            for (List<String> list : contentsOfBox) {
+                int listSum = (1 + key) * (contentsOfBox.indexOf(list) + 1) * Integer.parseInt(list.get(1));
+                boxSum += listSum;
+            }
+
+            sum += boxSum;
+        }
+
+        return sum;
+    }
 }
