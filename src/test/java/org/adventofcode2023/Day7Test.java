@@ -162,6 +162,12 @@ class Day7Test {
     }
 
     @Test
+    void totalWinningsPart2() {
+        List<String> cardsAndBids = Arrays.asList("32T3K 765", "T55J5 684", "KK677 28", "KTJJT 220", "QQQJA 483");
+        Approvals.verify(Day7.totalWinningsPart2(cardsAndBids));
+    }
+
+    @Test
     void getScorePart1() {
         String string = "32T3K";
         Approvals.verify(Day7.getScorePart1(string));

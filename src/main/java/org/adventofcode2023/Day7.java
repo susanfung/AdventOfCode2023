@@ -109,6 +109,47 @@ public class Day7 {
         return Arrays.asList(cards);
     }
 
+    public static Integer totalWinningsPart2(List<String> cardsAndBids) {
+        List<Day7Hands> hands = new ArrayList<>();
+        int totalWinnings = 0;
+
+        for (String cardsAndBid : cardsAndBids) {
+            String[] cardsAndBidArray = cardsAndBid.split(" ");
+            Integer characterCounts = getScorePart2(cardsAndBidArray[0]);
+
+            hands.add(new Day7Hands(characterCounts, cardsAndBidArray[0], cardsAndBidArray[1]));
+        }
+
+        Collections.sort(hands, (hand1, hand2) -> {
+            if (hand1.characterCounts.equals(hand2.characterCounts)) {
+                List<String> hand1Cards = cardsToNumbersPart1(hand1.cards.split(""));
+                List<String> hand2Cards = cardsToNumbersPart1(hand2.cards.split(""));
+
+                for (int j = 0; j < hand1Cards.size(); j++) {
+                    int comparisonCards = Integer.compare(Integer.parseInt(hand1Cards.get(j)), Integer.parseInt(hand2Cards.get(j)));
+
+                    if (comparisonCards != 0) {
+                        return comparisonCards;
+                    }
+                }
+            } else {
+                int comparisonCharacterCounts = hand1.characterCounts.compareTo(hand2.characterCounts);
+
+                if (comparisonCharacterCounts != 0) {
+                    return comparisonCharacterCounts;
+                }
+            }
+
+            return 0;
+        });
+
+        for (int i = 0; i < hands.size(); i++) {
+            totalWinnings += Integer.parseInt(hands.get(i).bid) * (i + 1);
+        }
+
+        return totalWinnings;
+    }
+
     public static Integer getScorePart2(String string) {
         Map<Character, Integer> charCountMap = new HashMap<>();
 
@@ -182,5 +223,4 @@ public class Day7 {
 
         return Arrays.asList(cards);
     }
-
 }
