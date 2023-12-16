@@ -122,8 +122,8 @@ public class Day7 {
 
         Collections.sort(hands, (hand1, hand2) -> {
             if (hand1.characterCounts.equals(hand2.characterCounts)) {
-                List<String> hand1Cards = cardsToNumbersPart1(hand1.cards.split(""));
-                List<String> hand2Cards = cardsToNumbersPart1(hand2.cards.split(""));
+                List<String> hand1Cards = cardsToNumbersPart2(hand1.cards.split(""));
+                List<String> hand2Cards = cardsToNumbersPart2(hand2.cards.split(""));
 
                 for (int j = 0; j < hand1Cards.size(); j++) {
                     int comparisonCards = Integer.compare(Integer.parseInt(hand1Cards.get(j)), Integer.parseInt(hand2Cards.get(j)));
@@ -160,6 +160,9 @@ public class Day7 {
         Map<Integer, Integer> transformedMap = transformKeys(charCountMap);
 
         if (charCountMap.containsKey('J')) {
+            int wildCardCount = charCountMap.get('J');
+            transformedMap.remove(1);
+
             Integer largestKey = null;
             int largestValue = Integer.MIN_VALUE;
 
@@ -172,8 +175,11 @@ public class Day7 {
                 }
             }
 
-            transformedMap.put(largestKey, transformedMap.get(largestKey) + transformedMap.get(1));
-            transformedMap.remove(1);
+            if (largestKey != null) {
+                transformedMap.put(largestKey, transformedMap.get(largestKey) + wildCardCount);
+            } else {
+                transformedMap.put(1, wildCardCount);
+            }
         }
 
         List<String> sortedCounts = transformedMap.values()
