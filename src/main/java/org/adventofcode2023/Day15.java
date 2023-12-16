@@ -1,6 +1,18 @@
 package org.adventofcode2023;
 
+import java.util.List;
+
 public class Day15 {
+    public static Integer sumOfInitializationSequence(List<String> initializationSequence) {
+        int sum = 0;
+
+        for (String string : initializationSequence) {
+            sum += hashAlgorithm(string);
+        }
+
+        return sum;
+    }
+
     public static Integer hashAlgorithm(String string) {
         int result = 0;
 
