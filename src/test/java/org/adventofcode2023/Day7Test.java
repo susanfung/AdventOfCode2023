@@ -152,18 +152,18 @@ class Day7Test {
                                                   "4KKK4 80", "84J7Q 805", "ATQTJ 473", "K92JQ 707", "222J2 981", "KQ7J7 603", "55JJA 46",
                                                   "QKJAA 696", "842K5 562", "K58K8 5", "T9T5T 939", "TT956 230", "53555 810", "JK8K8 585",
                                                   "J795A 85", "4T8T8 54", "QKK77 830", "KKKJJ 210", "9T9J9 383", "6Q464 285", "73257 159");
-        Approvals.verify(Day7.totalWinnings(cardsAndBids));
+        Approvals.verify(Day7.totalWinningsPart1(cardsAndBids));
     }
 
     @Test
-    void totalWinnings() {
+    void totalWinningsPart1() {
         List<String> cardsAndBids = Arrays.asList("32T3K 765", "T55J5 684", "KK677 28", "KTJJT 220", "QQQJA 483");
-        Approvals.verify(Day7.totalWinnings(cardsAndBids));
+        Approvals.verify(Day7.totalWinningsPart1(cardsAndBids));
     }
 
     @Test
-    void getScore() {
+    void getScorePart1() {
         String string = "32T3K";
-        Approvals.verify(Day7.getScore(string));
+        Approvals.verify(Day7.getScorePart1(string));
     }
 }
