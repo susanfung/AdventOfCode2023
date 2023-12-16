@@ -18,16 +18,23 @@ public class Day15 {
         return sum;
     }
 
-    public static Integer hashAlgorithm(String string) {
-        int result = 0;
+    public static Integer focusingPower(List<String> initializationSequence) {
+        Map<Integer, List<List<String>>> boxContents = mapLensToBox(initializationSequence);
+        int sum = 0;
 
-        for (int i = 0; i < string.length(); i++) {
-            result += (int) string.charAt(i);
-            result *= 17;
-            result = result % 256;
+        for (Integer key : boxContents.keySet()) {
+            List<List<String>> contentsOfBox = boxContents.get(key);
+            int boxSum = 0;
+
+            for (List<String> list : contentsOfBox) {
+                int listSum = (1 + key) * (contentsOfBox.indexOf(list) + 1) * Integer.parseInt(list.get(1));
+                boxSum += listSum;
+            }
+
+            sum += boxSum;
         }
 
-        return result;
+        return sum;
     }
 
     public static Map<Integer, List<List<String>>> mapLensToBox(List<String> initializationSequence) {
@@ -78,6 +85,18 @@ public class Day15 {
         return boxContents;
     }
 
+    public static Integer hashAlgorithm(String string) {
+        int result = 0;
+
+        for (int i = 0; i < string.length(); i++) {
+            result += (int) string.charAt(i);
+            result *= 17;
+            result = result % 256;
+        }
+
+        return result;
+    }
+
     private static List<String> splitString(String input) {
         List<String> resultList = new ArrayList<>();
 
@@ -91,24 +110,5 @@ public class Day15 {
         resultList.add(parts[parts.length - 1]);
 
         return resultList;
-    }
-
-    public static Integer focusingPower(List<String> initializationSequence) {
-        Map<Integer, List<List<String>>> boxContents = mapLensToBox(initializationSequence);
-        int sum = 0;
-
-        for (Integer key : boxContents.keySet()) {
-            List<List<String>> contentsOfBox = boxContents.get(key);
-            int boxSum = 0;
-
-            for (List<String> list : contentsOfBox) {
-                int listSum = (1 + key) * (contentsOfBox.indexOf(list) + 1) * Integer.parseInt(list.get(1));
-                boxSum += listSum;
-            }
-
-            sum += boxSum;
-        }
-
-        return sum;
     }
 }
