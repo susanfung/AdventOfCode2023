@@ -8,12 +8,7 @@ import java.util.stream.Collectors;
 
 public class Day8 {
     public static Integer stepsPart1(String instructions, List<String> nodes) {
-        Map<String, List<String>> nodesMap = nodes.stream().collect(Collectors.toMap(
-                node -> node.split("=")[0].trim(),
-                node -> Arrays.stream(node.split("=")[1].trim().replaceAll("[()]", "").split(","))
-                              .map(String::trim)
-                              .collect(Collectors.toList())
-        ));
+        Map<String, List<String>> nodesMap = getNodesMap(nodes);
 
         String node = "AAA";
         int instructionPosition = 0;
@@ -34,12 +29,7 @@ public class Day8 {
     }
 
     public static Long stepsPart2(String instructions, List<String> nodes) {
-        Map<String, List<String>> nodesMap = nodes.stream().collect(Collectors.toMap(
-                node -> node.split("=")[0].trim(),
-                node -> Arrays.stream(node.split("=")[1].trim().replaceAll("[()]", "").split(","))
-                              .map(String::trim)
-                              .collect(Collectors.toList())
-        ));
+        Map<String, List<String>> nodesMap = getNodesMap(nodes);
 
         return nodesMap.entrySet()
                        .stream()
@@ -68,5 +58,15 @@ public class Day8 {
                            BigInteger absProduct = a.multiply(b).abs();
                            return absProduct.divide(gcd);
                        }).longValue();
+    }
+
+    private static Map<String, List<String>> getNodesMap(List<String> nodes) {
+        Map<String, List<String>> nodesMap = nodes.stream().collect(Collectors.toMap(
+                node -> node.split("=")[0].trim(),
+                node -> Arrays.stream(node.split("=")[1].trim().replaceAll("[()]", "").split(","))
+                              .map(String::trim)
+                              .collect(Collectors.toList())
+        ));
+        return nodesMap;
     }
 }
