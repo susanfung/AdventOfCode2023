@@ -166,4 +166,10 @@ class Day7Test {
         String string = "32T3K";
         Approvals.verify(Day7.getScorePart1(string));
     }
+
+    @Test
+    void getScorePart2() {
+        List<String> stringList = Arrays.asList("T55JT", "T55J5");
+        Approvals.verifyAll("Score:", stringList, s -> String.valueOf(Day7.getScorePart2(s)));
+    }
 }
