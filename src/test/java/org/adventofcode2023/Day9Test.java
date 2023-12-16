@@ -218,4 +218,10 @@ class Day9Test {
         List<String> history = Arrays.asList("0 3 6 9 12 15", "1 3 6 10 15 21", "10 13 16 21 30 45");
         Approvals.verify(Day9.sumOfExtrapolatedValuesForward(history));
     }
+
+    @Test
+    void sumOfExtrapolatedValuesBackward() {
+        List<String> history = Arrays.asList("0 3 6 9 12 15", "1 3 6 10 15 21", "10 13 16 21 30 45");
+        Approvals.verify(Day9.sumOfExtrapolatedValuesBackward(history));
+    }
 }
