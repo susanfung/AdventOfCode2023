@@ -1,6 +1,11 @@
 package org.adventofcode2023;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class Day15 {
     public static Integer sumOfInitializationSequence(List<String> initializationSequence) {
@@ -23,5 +28,68 @@ public class Day15 {
         }
 
         return result;
+    }
+
+    public static Map<Integer, List<List<String>>> mapLensToBox(List<String> initializationSequence) {
+        Map<Integer, List<List<String>>> boxContents = new HashMap<>();
+
+        for (String string : initializationSequence) {
+            List<String> hashMap = splitString(string);
+            Integer boxNumber = hashAlgorithm(hashMap.get(0));
+
+            if (hashMap.get(1).equals("=")) {
+                if (boxContents.containsKey(boxNumber)) {
+                    List<List<String>> contentsOfBox = boxContents.get(boxNumber);
+                    boolean found = false;
+
+                    for (List<String> list : contentsOfBox) {
+                        if (list.get(0).equals(hashMap.get(0))) {
+                            list.set(1, hashMap.get(2));
+                            found = true;
+                        }
+                    }
+
+                    if (!found) {
+                        contentsOfBox.add(Arrays.asList(hashMap.get(0), hashMap.get(2)));
+                    }
+
+                    boxContents.put(boxNumber, contentsOfBox);
+                } else {
+                    List<List<String>> contentsOfBox = new ArrayList<>();
+                    contentsOfBox.add(Arrays.asList(hashMap.get(0), hashMap.get(2)));
+                    boxContents.put(boxNumber, contentsOfBox);
+                }
+            } else {
+                if (boxContents.containsKey(boxNumber)) {
+                    List<List<String>> contentsOfBox = boxContents.get(boxNumber);
+                    Iterator<List<String>> iterator = contentsOfBox.iterator();
+
+                    while (iterator.hasNext()) {
+                        List<String> list = iterator.next();
+                        if (list.get(0).equals(hashMap.get(0))) {
+                            iterator.remove();
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return boxContents;
+    }
+
+    private static List<String> splitString(String input) {
+        List<String> resultList = new ArrayList<>();
+
+        String[] parts = input.split("[=-]", -1);
+
+        for (int i = 0; i < parts.length - 1; i++) {
+            resultList.add(parts[i]);
+            resultList.add(input.substring(parts[i].length(), parts[i].length() + 1));
+        }
+
+        resultList.add(parts[parts.length - 1]);
+
+        return resultList;
     }
 }
