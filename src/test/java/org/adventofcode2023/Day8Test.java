@@ -211,21 +211,29 @@ class Day8Test {
                                            "KVD = (GLG, LTF)", "VPX = (LBM, LPJ)", "GFN = (VBM, VBM)", "JCX = (HFV, XPP)",
                                            "DHR = (PVQ, KSF)", "XLT = (XXF, PQR)", "CKQ = (STS, SRN)", "MQL = (PJM, BJL)",
                                            "TLP = (GFN, PCD)", "HGL = (LNC, LQT)");
-        Approvals.verify(Day8.steps(instructions, nodes));
+        Approvals.verify(Day8.stepsPart1(instructions, nodes));
     }
 
     @Test
-    void stepsExample1() {
+    void stepsPart1Example1() {
         String instructions = "RL";
         List<String> nodes = Arrays.asList("AAA = (BBB, CCC)", "BBB = (DDD, EEE)", "CCC = (ZZZ, GGG)", "DDD = (DDD, DDD)",
                                            "EEE = (EEE, EEE)", "GGG = (GGG, GGG)", "ZZZ = (ZZZ, ZZZ)");
-        Approvals.verify(Day8.steps(instructions, nodes));
+        Approvals.verify(Day8.stepsPart1(instructions, nodes));
     }
 
     @Test
-    void stepsExample2() {
+    void stepsPart1Example2() {
         String instructions = "LLR";
         List<String> nodes = Arrays.asList("AAA = (BBB, BBB)", "BBB = (AAA, ZZZ)", "ZZZ = (ZZZ, ZZZ)");
-        Approvals.verify(Day8.steps(instructions, nodes));
+        Approvals.verify(Day8.stepsPart1(instructions, nodes));
+    }
+
+    @Test
+    void stepsPart2() {
+        String instructions = "LR";
+        List<String> nodes = Arrays.asList("11A = (11B, XXX)", "11B = (XXX, 11Z)", "11Z = (11B, XXX)", "22A = (22B, XXX)",
+                                           "22B = (22C, 22C)", "22C = (22Z, 22Z)", "22Z = (22B, 22B)", "XXX = (XXX, XXX)");
+        Approvals.verify(Day8.stepsPart2(instructions, nodes));
     }
 }
