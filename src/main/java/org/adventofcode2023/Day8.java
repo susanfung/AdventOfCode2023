@@ -1,5 +1,6 @@
 package org.adventofcode2023;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class Day8 {
         return steps;
     }
 
-    public static Integer stepsPart2(String instructions, List<String> nodes) {
+    public static Long stepsPart2(String instructions, List<String> nodes) {
         Map<String, List<String>> nodesMap = nodes.stream().collect(Collectors.toMap(
                 node -> node.split("=")[0].trim(),
                 node -> Arrays.stream(node.split("=")[1].trim().replaceAll("[()]", "").split(","))
@@ -40,28 +41,32 @@ public class Day8 {
                               .collect(Collectors.toList())
         ));
 
-        List<String> currentNodes = nodesMap.entrySet().stream()
-                                             .map(Map.Entry::getKey)
-                                             .filter(key -> key.endsWith("A"))
-                                             .collect(Collectors.toList());
+        return nodesMap.entrySet()
+                       .stream()
+                       .filter(entry -> entry.getKey().endsWith("A"))
+                       .map(entry -> {
+                           String node = entry.getKey();
+                           int instructionPosition = 0;
+                           int steps = 0;
 
-        int instructionPosition = 0;
-        int steps = 0;
+                           while (!node.endsWith("Z")) {
+                               node = nodesMap.get(node).get(instructions.charAt(instructionPosition) == 'R' ? 1 : 0);
+                               steps++;
 
-        while (!currentNodes.stream().allMatch(str -> str.endsWith("Z"))) {
-            int finalInstructionPosition = instructionPosition;
+                               if (instructionPosition == instructions.length() - 1) {
+                                   instructionPosition = 0;
+                               } else {
+                                   instructionPosition++;
+                               }
+                           }
 
-            currentNodes = currentNodes.stream().map(node -> nodesMap.get(node).get(instructions.charAt(finalInstructionPosition) == 'R' ? 1 : 0))
-                                       .collect(Collectors.toList());
-            steps++;
-
-            if (instructionPosition == instructions.length() - 1) {
-                instructionPosition = 0;
-            } else {
-                instructionPosition++;
-            }
-        }
-
-        return steps;
+                           return steps;
+                       })
+                       .map(BigInteger::valueOf)
+                       .reduce(BigInteger.ONE, (a, b) -> {
+                           BigInteger gcd = a.gcd(b);
+                           BigInteger absProduct = a.multiply(b).abs();
+                           return absProduct.divide(gcd);
+                       }).longValue();
     }
 }
