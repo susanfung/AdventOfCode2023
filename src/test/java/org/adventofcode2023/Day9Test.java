@@ -210,12 +210,12 @@ class Day9Test {
                 "7 20 36 46 41 20 1 35 223 736 1838 3912 7489 13280 22211 35461 54503 81148 117592 166466 230889",
                 "16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96",
                 "-1 3 12 46 137 336 738 1542 3172 6494 13173 26223 50812 95393 173241 304485 518733 858397 1382834 2173428 3339747");
-        Approvals.verify(Day9.sumOfExtrapolatedValues(history));
+        Approvals.verify(Day9.sumOfExtrapolatedValuesForward(history));
     }
 
     @Test
-    void sumOfExtrapolatedValues() {
+    void sumOfExtrapolatedValuesForward() {
         List<String> history = Arrays.asList("0 3 6 9 12 15", "1 3 6 10 15 21", "10 13 16 21 30 45");
-        Approvals.verify(Day9.sumOfExtrapolatedValues(history));
+        Approvals.verify(Day9.sumOfExtrapolatedValuesForward(history));
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Day9 {
-    public static Integer sumOfExtrapolatedValues(List<String> history) {
+    public static Integer sumOfExtrapolatedValuesForward(List<String> history) {
         int sum = 0;
 
         for (String line : history) {
